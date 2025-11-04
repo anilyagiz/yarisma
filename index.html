@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilgi Yarışması - Sınıf Versiyonu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #b8c6db 0%, #f5f7fa 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            color: #333;
+        }
+
+        .team-score {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .team-a {
+            color: #e74c3c;
+        }
+
+        .team-b {
+            color: #3498db;
+        }
+
+        .question-counter {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .question {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .option-btn {
+            padding: 20px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .option-a { background: #ffb3ba; color: #5f3a4a; }
+        .option-b { background: #bae1ff; color: #2c5f7c; }
+        .option-c { background: #ffffba; color: #7c7c2c; }
+        .option-d { background: #baffc9; color: #2c7c3a; }
+
+        .option-btn.correct {
+            background: #4CAF50 !important;
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .team-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .team-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .team-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .team-btn {
+            padding: 15px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .team-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .team-btn.selected {
+            background: #a8e6cf;
+            color: #2d3436;
+            border-color: #a8e6cf;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .control-btn {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+            color: #2d3436;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #ffd3b6 0%, #ffaaa5 100%);
+            color: #2d3436;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+            color: #2d3436;
+            padding: 20px 40px;
+            font-size: 1.3em;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #ffd3b6 0%, #ffaaa5 100%);
+            color: #2d3436;
+            padding: 20px 40px;
+            font-size: 1.3em;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .result-screen {
+            text-align: center;
+        }
+
+        .winner {
+            font-size: 2em;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .final-scores {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+                max-width: 100%;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+            
+            .score-board {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .team-score {
+                font-size: 1.1em;
+            }
+            
+            .question-counter {
+                font-size: 0.9em;
+                margin-bottom: 10px;
+            }
+            
+            .question {
+                font-size: 1.2em;
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+            
+            .option-btn {
+                padding: 15px;
+                font-size: 1em;
+            }
+            
+            .team-section {
+                margin: 15px 0;
+                padding: 15px;
+            }
+            
+            .team-title {
+                font-size: 1.1em;
+                margin-bottom: 10px;
+            }
+            
+            .team-buttons {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .team-btn {
+                padding: 12px;
+                font-size: 0.9em;
+            }
+            
+            .control-buttons {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 20px;
+            }
+            
+            .control-btn {
+                padding: 12px 20px;
+                font-size: 1em;
+            }
+            
+            .start-btn, .restart-btn {
+                padding: 15px 30px;
+                font-size: 1.1em;
+            }
+            
+            .winner {
+                font-size: 1.5em;
+            }
+            
+            .final-scores {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .question {
+                font-size: 1.1em;
+                padding: 10px;
+            }
+            
+            .option-btn {
+                padding: 12px;
+                font-size: 0.9em;
+            }
+            
+            .team-btn {
+                padding: 10px;
+                font-size: 0.8em;
+            }
+            
+            .control-btn {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Başlangıç Ekranı -->
+        <div id="startScreen" class="screen">
+            <h1>🎯 Bilgi Yarışması</h1>
+            <div class="score-board">
+                <div class="team-score team-a">A Grubu: <span id="scoreA">0</span></div>
+                <div class="team-score team-b">B Grubu: <span id="scoreB">0</span></div>
+            </div>
+            <button class="control-btn start-btn" onclick="startQuiz()">Yarışmayı Başlat</button>
+        </div>
+
+        <!-- Soru Ekranı -->
+        <div id="questionScreen" class="screen hidden">
+            <div class="score-board">
+                <div class="team-score team-a">A Grubu: <span id="scoreA2">0</span></div>
+                <div class="team-score team-b">B Grubu: <span id="scoreB2">0</span></div>
+            </div>
+            
+            <div class="question-counter">Soru <span id="currentQuestion">1</span> / <span id="totalQuestions">20</span></div>
+            
+            <div class="question" id="questionText"></div>
+            
+            <div class="options" id="optionsContainer"></div>
+            
+            <div class="team-section">
+                <div class="team-title team-a">A Grubu Cevabı:</div>
+                <div class="team-buttons" id="teamAButtons"></div>
+            </div>
+            
+            <div class="team-section">
+                <div class="team-title team-b">B Grubu Cevabı:</div>
+                <div class="team-buttons" id="teamBButtons"></div>
+            </div>
+            
+            <div class="control-buttons">
+                <button class="control-btn show-answer-btn" id="showAnswerBtn" onclick="showAnswer()" disabled>Doğru Cevabı Göster</button>
+                <button class="control-btn next-btn" id="nextBtn" onclick="nextQuestion()" disabled>Sonraki Soru</button>
+            </div>
+        </div>
+
+        <!-- Sonuç Ekranı -->
+        <div id="resultScreen" class="screen hidden">
+            <h1>🎉 Yarışma Bitti!</h1>
+            <div class="winner" id="winnerText"></div>
+            <div class="final-scores">
+                <div class="team-score team-a">A Grubu: <span id="finalScoreA">0</span></div>
+                <div class="team-score team-b">B Grubu: <span id="finalScoreB">0</span></div>
+            </div>
+            <button class="control-btn restart-btn" onclick="restartQuiz()">Başa Dön</button>
+        </div>
+    </div>
+
+    <script>
+        // Sorular veritabanı
+        const sorular = [
+            {
+                soru: "Türkiye'nin üç tarafı aşağıdakilerden hangisiyle çevrilidir?",
+                secenekler: ["Göller", "Denizler", "Dağlar", "Ovalar"],
+                dogru: 1
+            },
+            {
+                soru: "Türkiye'nin kuzeyinde hangi deniz yer alır?",
+                secenekler: ["Ege Denizi", "Akdeniz", "Karadeniz", "Marmara Denizi"],
+                dogru: 2
+            },
+            {
+                soru: "Türkiye'nin batısında hangi deniz bulunur?",
+                secenekler: ["Ege Denizi", "Akdeniz", "Karadeniz", "Marmara Denizi"],
+                dogru: 0
+            },
+            {
+                soru: "Türkiye'nin güneyinde hangi deniz vardır?",
+                secenekler: ["Ege Denizi", "Karadeniz", "Akdeniz", "Marmara Denizi"],
+                dogru: 2
+            },
+            {
+                soru: "İstanbul Boğazı hangi iki denizi birbirine bağlar?",
+                secenekler: ["Karadeniz – Ege Denizi", "Akdeniz – Marmara Denizi", "Marmara – Ege Denizi", "Karadeniz – Marmara Denizi"],
+                dogru: 3
+            },
+            {
+                soru: "Türkiye hangi iki kıta üzerinde yer alır?",
+                secenekler: ["Avrupa – Afrika", "Afrika – Asya", "Avrupa – Asya", "Asya – Amerika"],
+                dogru: 2
+            },
+            {
+                soru: "Türkiye'nin doğusunda hangi ülke yer alır?",
+                secenekler: ["Yunanistan", "İran", "Bulgaristan", "Suriye"],
+                dogru: 1
+            },
+            {
+                soru: "Türkiye'nin batısında hangi ülke yer alır?",
+                secenekler: ["Ermenistan", "Gürcistan", "Yunanistan", "İran"],
+                dogru: 2
+            },
+            {
+                soru: "Türkiye'nin güneyinde hangi ülke yer alır?",
+                secenekler: ["Bulgaristan", "Suriye", "Gürcistan", "Romanya"],
+                dogru: 1
+            },
+            {
+                soru: "Türkiye'nin üç tarafının denizlerle çevrili olması neyi kolaylaştırır?",
+                secenekler: ["Tarım ürünlerini", "Ulaşım ve ticareti", "Sanayi üretimini", "Nüfus yoğunluğunu"],
+                dogru: 1
+            },
+            {
+                soru: "Türkiye'nin denizlerle çevrili olmasının sonucu aşağıdakilerden hangisidir?",
+                secenekler: ["Deniz ticareti gelişmiştir", "Nüfus azalmıştır", "Dağlar azalmıştır", "Tarım bitmiştir"],
+                dogru: 0
+            },
+            {
+                soru: "Dünyanın en geniş okyanusu hangisidir?",
+                secenekler: ["Atlas Okyanusu", "Hint Okyanusu", "Büyük Okyanus (Pasifik)", "Arktik Okyanusu"],
+                dogru: 2
+            },
+            {
+                soru: "Dünyanın en küçük okyanusu hangisidir?",
+                secenekler: ["Atlas Okyanusu", "Hint Okyanusu", "Arktik (Kuzey Buz Denizi)", "Büyük Okyanus"],
+                dogru: 2
+            },
+            {
+                soru: "Amerika ve Avrupa kıtaları arasındaki okyanus hangisidir?",
+                secenekler: ["Atlas Okyanusu", "Hint Okyanusu", "Büyük Okyanus", "Arktik Okyanusu"],
+                dogru: 0
+            },
+            {
+                soru: "Kıtalar arasındaki okyanuslar hangi özelliğin oluşmasında etkilidir?",
+                secenekler: ["Bitki örtüsü", "Sanayi", "Yer şekilleri", "Ticaret yolları"],
+                dogru: 2
+            },
+            {
+                soru: "Türkiye'nin üç tarafının denizlerle çevrili olması hangi ekonomik faaliyeti destekler?",
+                secenekler: ["Balıkçılık", "Madencilik", "Hayvancılık", "Ormancılık"],
+                dogru: 0
+            },
+            {
+                soru: "Anadolu yarımadası hangi üç deniz tarafından çevrilidir?",
+                secenekler: ["Karadeniz, Akdeniz, Ege Denizi", "Karadeniz, Marmara, Akdeniz", "Ege Denizi, Marmara, Akdeniz", "Karadeniz, Ege Denizi, Marmara"],
+                dogru: 0
+            },
+            {
+                soru: "Türkiye'nin en uzun kıyı şeridi hangi denize sahiptir?",
+                secenekler: ["Karadeniz", "Akdeniz", "Ege Denizi", "Marmara Denizi"],
+                dogru: 1
+            },
+            {
+                soru: "Çanakkale Boğazı hangi iki denizi birbirine bağlar?",
+                secenekler: ["Karadeniz – Marmara", "Marmara – Ege Denizi", "Ege Denizi – Akdeniz", "Karadeniz – Akdeniz"],
+                dogru: 1
+            },
+            {
+                soru: "Türkiye'nin yüzölçümü yaklaşık kaç km²'dir?",
+                secenekler: ["587.000 km²", "783.000 km²", "1.000.000 km²", "450.000 km²"],
+                dogru: 1
+            }
+        ];
+
+        // Oyun durumu
+        let currentQuestionIndex = 0;
+        let scoreA = 0;
+        let scoreB = 0;
+        let teamAAnswer = null;
+        let teamBAnswer = null;
+        let answerShown = false;
+
+        // Ses efekti (Base64 encoded ding sound)
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playDingSound() {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            scoreA = 0;
+            scoreB = 0;
+            teamAAnswer = null;
+            teamBAnswer = null;
+            answerShown = false;
+            
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('questionScreen').classList.remove('hidden');
+            
+            updateScores();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = sorular[currentQuestionIndex];
+            
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = sorular.length;
+            document.getElementById('questionText').textContent = question.soru;
+            
+            // Seçenekleri yükle
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            const optionClasses = ['option-a', 'option-b', 'option-c', 'option-d'];
+            
+            question.secenekler.forEach((secenek, index) => {
+                const button = document.createElement('button');
+                button.className = `option-btn ${optionClasses[index]}`;
+                button.textContent = `${optionLetters[index]}. ${secenek}`;
+                button.id = `option-${index}`;
+                optionsContainer.appendChild(button);
+            });
+            
+            // Takım butonlarını oluştur
+            createTeamButtons();
+            
+            // Butonları sıfırla
+            teamAAnswer = null;
+            teamBAnswer = null;
+            answerShown = false;
+            document.getElementById('showAnswerBtn').disabled = true;
+            document.getElementById('nextBtn').disabled = true;
+        }
+
+        function createTeamButtons() {
+            const teamAButtons = document.getElementById('teamAButtons');
+            const teamBButtons = document.getElementById('teamBButtons');
+            
+            teamAButtons.innerHTML = '';
+            teamBButtons.innerHTML = '';
+            
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            
+            optionLetters.forEach((letter, index) => {
+                // A Grubu butonları
+                const btnA = document.createElement('button');
+                btnA.className = 'team-btn';
+                btnA.textContent = letter;
+                btnA.onclick = () => selectTeamAnswer('A', index);
+                btnA.id = `teamA-${index}`;
+                teamAButtons.appendChild(btnA);
+                
+                // B Grubu butonları
+                const btnB = document.createElement('button');
+                btnB.className = 'team-btn';
+                btnB.textContent = letter;
+                btnB.onclick = () => selectTeamAnswer('B', index);
+                btnB.id = `teamB-${index}`;
+                teamBButtons.appendChild(btnB);
+            });
+        }
+
+        function selectTeamAnswer(team, answerIndex) {
+            if (answerShown) return;
+            
+            if (team === 'A') {
+                teamAAnswer = answerIndex;
+                // A Grubu butonlarını güncelle
+                for (let i = 0; i < 4; i++) {
+                    const btn = document.getElementById(`teamA-${i}`);
+                    btn.classList.toggle('selected', i === answerIndex);
+                }
+            } else {
+                teamBAnswer = answerIndex;
+                // B Grubu butonlarını güncelle
+                for (let i = 0; i < 4; i++) {
+                    const btn = document.getElementById(`teamB-${i}`);
+                    btn.classList.toggle('selected', i === answerIndex);
+                }
+            }
+            
+            // Her iki takım da cevap verdiyse "Doğru Cevabı Göster" butonunu aktif et
+            if (teamAAnswer !== null && teamBAnswer !== null) {
+                document.getElementById('showAnswerBtn').disabled = false;
+            }
+        }
+
+        function showAnswer() {
+            if (answerShown) return;
+            
+            answerShown = true;
+            const question = sorular[currentQuestionIndex];
+            
+            // Doğru cevabı yeşile boyala
+            const correctOption = document.getElementById(`option-${question.dogru}`);
+            correctOption.classList.add('correct');
+            
+            // Ses efekti çal
+            playDingSound();
+            
+            // Puanları güncelle
+            if (teamAAnswer === question.dogru) {
+                scoreA++;
+            }
+            if (teamBAnswer === question.dogru) {
+                scoreB++;
+            }
+            
+            updateScores();
+            
+            // "Sonraki Soru" butonunu aktif et
+            document.getElementById('showAnswerBtn').disabled = true;
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex >= sorular.length) {
+                showResults();
+            } else {
+                loadQuestion();
+            }
+        }
+
+        function updateScores() {
+            document.getElementById('scoreA').textContent = scoreA;
+            document.getElementById('scoreB').textContent = scoreB;
+            document.getElementById('scoreA2').textContent = scoreA;
+            document.getElementById('scoreB2').textContent = scoreB;
+        }
+
+        function showResults() {
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+            
+            document.getElementById('finalScoreA').textContent = scoreA;
+            document.getElementById('finalScoreB').textContent = scoreB;
+            
+            let winnerText = '';
+            if (scoreA > scoreB) {
+                winnerText = '🏆 A Grubu Kazandı!';
+            } else if (scoreB > scoreA) {
+                winnerText = '🏆 B Grubu Kazandı!';
+            } else {
+                winnerText = '🤝 Beraberlik!';
+            }
+            
+            document.getElementById('winnerText').textContent = winnerText;
+        }
+
+        function restartQuiz() {
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+            
+            // Skorları sıfırla
+            scoreA = 0;
+            scoreB = 0;
+            updateScores();
+        }
+
+        // Sayfa yüklendiğinde skorları güncelle
+        updateScores();
+    </script>
+</body>
+</html>
