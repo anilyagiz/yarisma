@@ -144,7 +144,7 @@
         .option-btn {
             padding: 22px;
             font-size: 1.2em;
-            border: 3px solid transparent;
+            border: 3px solid rgba(78, 205, 196, 0.5);
             border-radius: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -152,28 +152,13 @@
             color: white;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.3) 0%, rgba(85, 98, 112, 0.4) 100%);
         }
 
         .option-btn:hover {
             transform: translateY(-5px) scale(1.03);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-
-        .option-a {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-            border-color: #ff8787;
-        }
-        .option-b {
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a3a0 100%);
-            border-color: #6ee7df;
-        }
-        .option-c {
-            background: linear-gradient(135deg, #ffd93d 0%, #f6c23e 100%);
-            border-color: #ffe66d;
-        }
-        .option-d {
-            background: linear-gradient(135deg, #95e1d3 0%, #6bcf96 100%);
-            border-color: #a8e6cf;
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.4) 0%, rgba(85, 98, 112, 0.5) 100%);
         }
 
         .option-btn.correct {
@@ -525,82 +510,82 @@
         // Sorular veritabanı - İlkokul Coğrafya Yarışması
         const sorular = [
             {
-                soru: "🌊 Türkiye'nin üç tarafı aşağıdakilerden hangisiyle çevrilidir?",
+                soru: "Türkiye'nin üç tarafı aşağıdakilerden hangisiyle çevrilidir?",
                 secenekler: ["Göller", "Denizler", "Dağlar", "Ovalar"],
                 dogru: 1
             },
             {
-                soru: "⬆️ Türkiye'nin kuzeyinde hangi deniz yer alır?",
+                soru: "Türkiye'nin kuzeyinde hangi deniz yer alır?",
                 secenekler: ["Ege Denizi", "Akdeniz", "Karadeniz", "Marmara Denizi"],
                 dogru: 2
             },
             {
-                soru: "⬅️ Türkiye'nin batısında hangi deniz bulunur?",
+                soru: "Türkiye'nin batısında hangi deniz bulunur?",
                 secenekler: ["Ege Denizi", "Akdeniz", "Karadeniz", "Marmara Denizi"],
                 dogru: 0
             },
             {
-                soru: "⬇️ Türkiye'nin güneyinde hangi deniz vardır?",
+                soru: "Türkiye'nin güneyinde hangi deniz vardır?",
                 secenekler: ["Ege Denizi", "Karadeniz", "Akdeniz", "Marmara Denizi"],
                 dogru: 2
             },
             {
-                soru: "🌉 İstanbul Boğazı hangi iki denizi birbirine bağlar?",
+                soru: "İstanbul Boğazı hangi iki denizi birbirine bağlar?",
                 secenekler: ["Karadeniz – Ege Denizi", "Akdeniz – Marmara Denizi", "Marmara – Ege Denizi", "Karadeniz – Marmara Denizi"],
                 dogru: 3
             },
             {
-                soru: "🌍 Türkiye hangi iki kıta üzerinde yer alır?",
+                soru: "Türkiye hangi iki kıta üzerinde yer alır?",
                 secenekler: ["Avrupa – Afrika", "Afrika – Asya", "Avrupa – Asya", "Asya – Amerika"],
                 dogru: 2
             },
             {
-                soru: "➡️ Türkiye'nin doğusunda hangi ülke yer alır?",
+                soru: "Türkiye'nin doğusunda hangi ülke yer alır?",
                 secenekler: ["Yunanistan", "İran", "Bulgaristan", "Suriye"],
                 dogru: 1
             },
             {
-                soru: "⬅️ Türkiye'nin batısında hangi ülke yer alır?",
+                soru: "Türkiye'nin batısında hangi ülke yer alır?",
                 secenekler: ["Ermenistan", "Gürcistan", "Yunanistan", "İran"],
                 dogru: 2
             },
             {
-                soru: "⬇️ Türkiye'nin güneyinde hangi ülke yer alır?",
+                soru: "Türkiye'nin güneyinde hangi ülke yer alır?",
                 secenekler: ["Bulgaristan", "Suriye", "Gürcistan", "Romanya"],
                 dogru: 1
             },
             {
-                soru: "🚢 Türkiye'nin üç tarafının denizlerle çevrili olması neyi kolaylaştırır?",
+                soru: "Türkiye'nin üç tarafının denizlerle çevrili olması neyi kolaylaştırır?",
                 secenekler: ["Tarım ürünlerini", "Ulaşım ve ticareti", "Sanayi üretimini", "Nüfus yoğunluğunu"],
                 dogru: 1
             },
             {
-                soru: "⚓ Türkiye'nin denizlerle çevrili olmasının sonucu aşağıdakilerden hangisidir?",
+                soru: "Türkiye'nin denizlerle çevrili olmasının sonucu aşağıdakilerden hangisidir?",
                 secenekler: ["Deniz ticareti gelişmiştir", "Nüfus azalmıştır", "Dağlar azalmıştır", "Tarım bitmiştir"],
                 dogru: 0
             },
             {
-                soru: "🌊 Dünyanın en geniş okyanusu hangisidir?",
+                soru: "Dünyanın en geniş okyanusu hangisidir?",
                 secenekler: ["Atlas Okyanusu", "Hint Okyanusu", "Büyük Okyanus (Pasifik)", "Arktik Okyanusu"],
                 dogru: 2
             },
             {
-                soru: "❄️ Dünyanın en küçük okyanusu hangisidir?",
+                soru: "Dünyanın en küçük okyanusu hangisidir?",
                 secenekler: ["Atlas Okyanusu", "Hint Okyanusu", "Arktik (Kuzey Buz Denizi)", "Büyük Okyanus"],
                 dogru: 2
             },
             {
-                soru: "🌎 Amerika ve Avrupa kıtaları arasındaki okyanus hangisidir?",
+                soru: "Amerika ve Avrupa kıtaları arasındaki okyanus hangisidir?",
                 secenekler: ["Atlas Okyanusu", "Hint Okyanusu", "Büyük Okyanus", "Arktik Okyanusu"],
                 dogru: 0
             },
             {
-                soru: "🗺️ Kıtalar arasındaki okyanuslar hangi özelliğin oluşmasında etkilidir?",
-                secenekler: ["Bitki örtüsü", "Sanayi", "Ticaret yolları", "Yer şekilleri"],
-                dogru: 3
+                soru: "Kıtalar arasındaki okyanuslar hangi özelliğin oluşmasında etkilidir?",
+                secenekler: ["Bitki örtüsü", "Sanayi", "Yer şekilleri", "Ticaret yolları"],
+                dogru: 2
             },
             {
-                soru: "🐟 Türkiye'nin üç tarafının denizlerle çevrili olması hangi ekonomik faaliyeti destekler?",
+                soru: "Türkiye'nin üç tarafının denizlerle çevrili olması hangi ekonomik faaliyeti destekler?",
                 secenekler: ["Balıkçılık", "Madencilik", "Hayvancılık", "Ormancılık"],
                 dogru: 0
             }
@@ -660,13 +645,10 @@
             const optionsContainer = document.getElementById('optionsContainer');
             optionsContainer.innerHTML = '';
             
-            const optionLetters = ['A', 'B', 'C', 'D'];
-            const optionClasses = ['option-a', 'option-b', 'option-c', 'option-d'];
-            
             question.secenekler.forEach((secenek, index) => {
                 const button = document.createElement('button');
-                button.className = `option-btn ${optionClasses[index]}`;
-                button.textContent = `${optionLetters[index]}. ${secenek}`;
+                button.className = 'option-btn';
+                button.textContent = `${index + 1}. ${secenek}`;
                 button.id = `option-${index}`;
                 optionsContainer.appendChild(button);
             });
@@ -685,34 +667,32 @@
         function createTeamButtons() {
             const teamAButtons = document.getElementById('teamAButtons');
             const teamBButtons = document.getElementById('teamBButtons');
-            
+
             teamAButtons.innerHTML = '';
             teamBButtons.innerHTML = '';
-            
-            const optionLetters = ['A', 'B', 'C', 'D'];
-            
-            optionLetters.forEach((letter, index) => {
+
+            for (let i = 0; i < 4; i++) {
                 // A Grubu butonları
                 const btnA = document.createElement('button');
                 btnA.className = 'team-btn';
-                btnA.textContent = letter;
-                btnA.onclick = () => selectTeamAnswer('A', index);
-                btnA.id = `teamA-${index}`;
+                btnA.textContent = i + 1;
+                btnA.onclick = () => selectTeamAnswer('A', i);
+                btnA.id = `teamA-${i}`;
                 teamAButtons.appendChild(btnA);
-                
+
                 // B Grubu butonları
                 const btnB = document.createElement('button');
                 btnB.className = 'team-btn';
-                btnB.textContent = letter;
-                btnB.onclick = () => selectTeamAnswer('B', index);
-                btnB.id = `teamB-${index}`;
+                btnB.textContent = i + 1;
+                btnB.onclick = () => selectTeamAnswer('B', i);
+                btnB.id = `teamB-${i}`;
                 teamBButtons.appendChild(btnB);
-            });
+            }
         }
 
         function selectTeamAnswer(team, answerIndex) {
             if (answerShown) return;
-            
+
             if (team === 'A') {
                 teamAAnswer = answerIndex;
                 // A Grubu butonlarını güncelle
@@ -728,10 +708,10 @@
                     btn.classList.toggle('selected', i === answerIndex);
                 }
             }
-            
-            // Her iki takım da cevap verdiyse "Doğru Cevabı Göster" butonunu aktif et
+
+            // Her iki takım da cevap verdiyse otomatik olarak doğru cevabı göster
             if (teamAAnswer !== null && teamBAnswer !== null) {
-                document.getElementById('showAnswerBtn').disabled = false;
+                setTimeout(() => showAnswer(), 500); // 0.5 saniye bekle
             }
         }
 
