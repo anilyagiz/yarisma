@@ -498,7 +498,7 @@
     <div class="container">
         <!-- Başlangıç Ekranı -->
         <div id="startScreen" class="screen">
-            <h1>🌍 COĞRAFİ YARIŞMASI 🗺️</h1>
+            <h1>🌍 COĞRAFİ KOORDİNATLAR YARIŞMASI 🗺️</h1>
             <div class="score-board">
                 <div class="team-score team-a">🔴 A Grubu: <span id="scoreA">0</span></div>
                 <div class="team-score team-b">🔵 B Grubu: <span id="scoreB">0</span></div>
@@ -548,87 +548,77 @@
     </div>
 
     <script>
-        // Sorular veritabanı - İlkokul Coğrafya Yarışması
+        // Sorular veritabanı - Coğrafi Koordinatlar Yarışması
         const sorular = [
             {
-                soru: "Türkiye'nin üç tarafı aşağıdakilerden hangisiyle çevrilidir?",
-                secenekler: ["Göller", "Denizler", "Dağlar", "Ovalar"],
+                soru: "Dünya üzerinde bir yerin paralel ve meridyenlere göre konumuna ne ad verilir?",
+                secenekler: ["Göreceli Konum", "Mutlak Konum", "Siyasi Konum", "Coğrafi İşaret"],
                 dogru: 1
             },
             {
-                soru: "Türkiye'nin kuzeyinde hangi deniz yer alır?",
-                secenekler: ["Ege Denizi", "Akdeniz", "Karadeniz", "Marmara Denizi"],
+                soru: "Bir yerin okyanuslara, kıtalara veya önemli yerlere göre olan özel durumu hangi konum türü ile ifade edilir?",
+                secenekler: ["Mutlak Konum", "Göreceli Konum", "Dikey Konum", "Yöresel Konum"],
+                dogru: 1
+            },
+            {
+                soru: "Dünya üzerinde bir yerin konumunu belirlemek için atılan ilk adım nedir?",
+                secenekler: ["Başlangıç meridyenini belirlemek.", "Enlem ve boylam derecelerini birleştirmek.", "Başlangıç paraleli (Ekvator) ile kuzey/güney yarım küreyi tespit etmek.", "İlgili yerin kıtalara olan uzaklığını bulmak."],
                 dogru: 2
             },
             {
-                soru: "Türkiye'nin batısında hangi deniz bulunur?",
-                secenekler: ["Ege Denizi", "Akdeniz", "Karadeniz", "Marmara Denizi"],
-                dogru: 0
+                soru: "Başlangıç meridyeni (Greenwich) ile ilgili aşağıdaki ifadelerden hangisi doğrudur?",
+                secenekler: ["Dünya'yı kuzey ve güney yarım küre olarak ikiye ayırır.", "0 derece ile gösterilir ve Dünya'yı doğu ve batı yarım küre olarak ikiye ayırır.", "Boyları Ekvator'dan kutuplara doğru kısalır.", "Sadece doğu yarım kürede dereceleri artar."],
+                dogru: 1
             },
             {
-                soru: "Türkiye'nin güneyinde hangi deniz vardır?",
-                secenekler: ["Ege Denizi", "Karadeniz", "Akdeniz", "Marmara Denizi"],
-                dogru: 2
-            },
-            {
-                soru: "İstanbul Boğazı hangi iki denizi birbirine bağlar?",
-                secenekler: ["Karadeniz – Ege Denizi", "Akdeniz – Marmara Denizi", "Marmara – Ege Denizi", "Karadeniz – Marmara Denizi"],
+                soru: "Ekvator'un kuzeyinde yer alan bir nokta hangi yarım kürede bulunur?",
+                secenekler: ["Güney Yarım Küre", "Doğu Yarım Küre", "Batı Yarım Küre", "Kuzey Yarım Küre"],
                 dogru: 3
             },
             {
-                soru: "Türkiye hangi iki kıta üzerinde yer alır?",
-                secenekler: ["Avrupa – Afrika", "Afrika – Asya", "Avrupa – Asya", "Asya – Amerika"],
-                dogru: 2
-            },
-            {
-                soru: "Türkiye'nin doğusunda hangi ülke yer alır?",
-                secenekler: ["Yunanistan", "İran", "Bulgaristan", "Suriye"],
+                soru: "Meridyen dereceleri sola doğru (batıya) artıyorsa, bu yer hangi yarım kürededir?",
+                secenekler: ["Doğu Yarım Küre", "Batı Yarım Küre", "Kuzey Yarım Küre", "Güney Yarım Küre"],
                 dogru: 1
             },
             {
-                soru: "Türkiye'nin batısında hangi ülke yer alır?",
-                secenekler: ["Ermenistan", "Gürcistan", "Yunanistan", "İran"],
-                dogru: 2
+                soru: "Paralellerle ilgili aşağıdaki bilgilerden hangisi yanlıştır?",
+                secenekler: ["Ekvator'dan kutuplara doğru boyları kısalır.", "Birbirlerine paralel uzanırlar ve kesişmezler.", "Başlangıç paraleli Ekvator'dur.", "Tüm derecelerinin boyları birbirine eşittir."],
+                dogru: 3
             },
             {
-                soru: "Türkiye'nin güneyinde hangi ülke yer alır?",
-                secenekler: ["Bulgaristan", "Suriye", "Gürcistan", "Romanya"],
+                soru: "Meridyenlerin boyları hakkında doğru ifade aşağıdakilerden hangisidir?",
+                secenekler: ["Ekvator'dan kutuplara doğru kısalır.", "Bütün meridyenlerin boyları birbirine eşittir.", "Sadece 0 derece meridyeninin boyu en uzundur.", "Kutuplarda boyları en uzundur."],
                 dogru: 1
             },
             {
-                soru: "Türkiye'nin üç tarafının denizlerle çevrili olması neyi kolaylaştırır?",
-                secenekler: ["Tarım ürünlerini", "Ulaşım ve ticareti", "Sanayi üretimini", "Nüfus yoğunluğunu"],
+                soru: "Ardışık iki meridyen arasındaki mesafe Ekvator'dan kutuplara doğru gidildikçe nasıl değişir?",
+                secenekler: ["Artar.", "Sabit kalır.", "Azalır.", "Önce artar, sonra azalır."],
+                dogru: 2
+            },
+            {
+                soru: "Coğrafi konum belirlemede ikinci adım aşağıdakilerden hangisidir?",
+                secenekler: ["İlgili yerin paralel derecesini belirlemek.", "Ekvator'a göre kuzey/güney yarım küreyi tespit etmek.", "Başlangıç meridyeni (Greenwich) ile doğu/batı yarım küreyi tespit etmek.", "İlgili yerin en yakın kıtaya olan mesafesini belirlemek."],
+                dogru: 2
+            },
+            {
+                soru: "Ekvator'un güneyinde yer alan paralellere ne ad verilir?",
+                secenekler: ["Kuzey paralelleri", "Doğu paralelleri", "Güney paralelleri", "Batı paralelleri"],
+                dogru: 2
+            },
+            {
+                soru: "Bir yerin konumunun 40 derece Kuzey paraleli ile 30 derece Doğu meridyeninin kesiştiği nokta olarak belirlenmesi, konum belirlemenin kaçıncı adımıdır?",
+                secenekler: ["1. Adım", "2. Adım", "3. Adım", "4. Adım"],
+                dogru: 2
+            },
+            {
+                soru: "Meridyen dereceleri sağa doğru (doğuya) artıyorsa, bu yer hangi yarım kürededir?",
+                secenekler: ["Batı Yarım Küre", "Güney Yarım Küre", "Doğu Yarım Küre", "Kuzey Yarım Küre"],
+                dogru: 2
+            },
+            {
+                soru: "Paraleller ve meridyenler arasındaki temel farklardan biri aşağıdakilerden hangisidir?",
+                secenekler: ["Paraleller bir kutuptan diğerine uzanırken, meridyenler Ekvator'a paraleldir.", "Paraleller tam dairedir ve birbirini kesmez; meridyenler ise yarım dairedir ve kutup noktalarında kesişirler.", "Paralellerin dereceleri Ekvator'dan kutuplara doğru azalır, meridyenlerin dereceleri artar.", "Meridyenler boylamları gösterir, paraleller ise saat dilimlerini."],
                 dogru: 1
-            },
-            {
-                soru: "Türkiye'nin denizlerle çevrili olmasının sonucu aşağıdakilerden hangisidir?",
-                secenekler: ["Deniz ticareti gelişmiştir", "Nüfus azalmıştır", "Dağlar azalmıştır", "Tarım bitmiştir"],
-                dogru: 0
-            },
-            {
-                soru: "Dünyanın en geniş okyanusu hangisidir?",
-                secenekler: ["Atlas Okyanusu", "Hint Okyanusu", "Büyük Okyanus (Pasifik)", "Arktik Okyanusu"],
-                dogru: 2
-            },
-            {
-                soru: "Dünyanın en küçük okyanusu hangisidir?",
-                secenekler: ["Atlas Okyanusu", "Hint Okyanusu", "Arktik (Kuzey Buz Denizi)", "Büyük Okyanus"],
-                dogru: 2
-            },
-            {
-                soru: "Amerika ve Avrupa kıtaları arasındaki okyanus hangisidir?",
-                secenekler: ["Atlas Okyanusu", "Hint Okyanusu", "Büyük Okyanus", "Arktik Okyanusu"],
-                dogru: 0
-            },
-            {
-                soru: "Kıtalar arasındaki okyanuslar hangi özelliğin oluşmasında etkilidir?",
-                secenekler: ["Bitki örtüsü", "Sanayi", "Yer şekilleri", "Ticaret yolları"],
-                dogru: 2
-            },
-            {
-                soru: "Türkiye'nin üç tarafının denizlerle çevrili olması hangi ekonomik faaliyeti destekler?",
-                secenekler: ["Balıkçılık", "Madencilik", "Hayvancılık", "Ormancılık"],
-                dogru: 0
             }
         ];
 
